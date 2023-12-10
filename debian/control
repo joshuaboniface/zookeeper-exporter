@@ -1,0 +1,29 @@
+Source: prometheus-zookeeper-exporter
+Section: devel
+Priority: optional
+Maintainer: Joshua M. Boniface <joshua@boniface.me>
+Uploaders: Joshua M. Boniface <joshua@boniface.me>
+Build-Depends: debhelper-compat (= 13),
+               dh-golang,
+               golang-any,
+               golang-github-prometheus-client-golang-dev,
+               pkg-config
+Standards-Version: 4.5.1
+Homepage: https://github.com/dabealu/zookeeper-exporter
+Vcs-Browser: https://github.com/dabealu/zookeeper-exporter
+Vcs-Git: https://github.com/dabealu/zookeeper-exporter.git
+XS-Go-Import-Path: github.com/dabealu/zookeeper-exporter
+Testsuite: autopkgtest-pkg-go
+Rules-Requires-Root: no
+
+Package: prometheus-zookeeper-exporter
+Architecture: any
+Built-Using: ${misc:Built-Using}
+Pre-Depends: ${misc:Pre-Depends}
+Depends: daemon | systemd-sysv,
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: Prometheus metrics exporter for zookeeper
+ This exporter connects to any zookeeper daemon and exports various metrics
+ related to the Zookeeper system. By default, this exporter listens on TCP
+ port 9141.

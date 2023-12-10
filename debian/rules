@@ -1,0 +1,39 @@
+#!/usr/bin/make -f
+include /usr/share/dpkg/pkg-info.mk
+
+export DH_GOPKG := github.com/dabealu/zookeeper-exporter
+
+BUILDDIR := $(CURDIR)/build
+
+override_dh_auto_install:
+	dh_auto_install -- --no-source
+
+%:
+	dh $@ --buildsystem=golang --with=golang \
+		--builddirectory=$(BUILDDIR)
+
+BINNAME := $(DEB_SOURCE)
+WHATIS := "$(BINNAME) \\- Prometheus exporter for zookeeper metrics"
+
+override_dh_auto_build:
+	dh_auto_build
+	# Rename the binary to match the debian package.
+	cp -v $(BUILDDIR)/bin/zookeeper-exporter $(BUILDDIR)/bin/$(BINNAME)
+	rm -f $(BUILDDIR)/bin/zookeeper-exporter
+	cp debian/prometheus-zookeeper-exporter.man build/$(BINNAME).1
+	# Remove build user/build date/go version headers, which is ugly.
+	sed -i -e '/^  /d' build/$(BINNAME).1
+	# Fix whatis entry.
+	sed -i '/^.SH "NAME"/,+1c.SH "NAME"\n'$(WHATIS) build/$(BINNAME).1
+	sed -i "s/\.TH zookeeper-exporter/\.TH $(BINNAME)/g" build/$(BINNAME).1
+	sed -i "s/\\\fBzookeeper-exporter/\\\fB$(BINNAME)/g" build/$(BINNAME).1
+
+override_dh_auto_install:
+
+override_dh_dwz:
+
+override_dh_golang:
+
+override_dh_auto_clean:
+	rm -rf build/
+	dh $@

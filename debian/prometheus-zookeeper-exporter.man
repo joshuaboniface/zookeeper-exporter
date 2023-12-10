@@ -1,0 +1,34 @@
+.TH zookeeper-exporter 1  ""
+.SH "NAME"
+zookeeper-exporter
+.SH "SYNOPSIS"
+.TP
+\fBzookeeper-exporter [<flags>]\fR
+
+.SH "DESCRIPTION"
+Prometheus metrics exporter for zookeeper
+.SH "OPTIONS"
+.TP
+\fB-help\fR
+Show help message.
+.TP
+\fB-listen="0.0.0.0:9141"\fR
+Address to listen on.
+.TP
+\fB-location="/metrics"\fR
+Metrics location.
+.TP
+\fB-timeout=30\fR
+Timeout for connection to zk servers, in seconds.
+.TP
+\fB-zk-hosts=""\fR
+Comma separated list of zk servers, e.g. '10.0.0.1:2181,10.0.0.2:2181,10.0.0.3:2181'.
+.TP
+\fB-zk-tls-auth\fR
+Enable ZK TLS client authentication.
+.TP
+\fB-zk-tls-auth-cert=""\fR
+Certificate path for ZK TLS client authentication.
+.TP
+\fB-zk-tls-auth-key=""\fR
+Private key path for ZK TLS client authentication.

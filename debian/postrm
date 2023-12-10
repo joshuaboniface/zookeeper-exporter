@@ -1,0 +1,15 @@
+#!/bin/sh
+# postrm script for prometheus-zookeeper-exporter
+# Script executed after the package is removed.
+
+set -e
+
+case "$1" in
+  purge)
+        rm -rf /var/lib/prometheus/zookeeper-exporter/ \
+            /var/run/prometheus/prometheus-zookeeper-exporter.pid
+	# We do NOT remove the system user.
+	;;
+esac
+
+#DEBHELPER#
